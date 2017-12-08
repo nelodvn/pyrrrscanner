@@ -12,32 +12,32 @@ usage: pyrrrscanner.py [-h] [-gen GEN] [-p MAX_PRICE] [-mp MIN_PRICE] [-v]
                        [-go] [-s] [-c CATTRIBUTES] [-color MAIN_COLOR]                                   
                        [-k KITTY]                   
 
-prrrruuscanner - cryptokitties.co (CK) scanner, build with pruu love by nelown                           
+      prrrruuscanner - cryptokitties.co (CK) scanner, build with pruu love by nelown                           
 
-optional arguments:                                 
-  -h, --help            show this help message and exit                                                  
-  -gen GEN, --gen GEN   Cryptokittie generation(s) to search for. Ex: -gen 1,                            
-                        -gen 1,3,5                  
-  -p MAX_PRICE, --max_price MAX_PRICE               
-                        Top price filter, set the maximum price here                                     
-  -mp MIN_PRICE, --min_price MIN_PRICE              
-                        The minium price filter.    
-  -v, --virgin          True if you are looking for virgins kitties, falsle                              
-                        otherwise                   
-  -go, --goodies_only   Check for the best cattributes only                                              
-  -s, --sire            Search for siring auctions instead of selling.                                   
-  -c CATTRIBUTES, --cattributes CATTRIBUTES         
-                        Search for informed cattributes only. Same format as                             
-                        -gen                        
-  -color MAIN_COLOR, --main_color MAIN_COLOR        
-                        Search for informed main color only. Same format as                              
-                        -gen                        
-  -k KITTY, --kitty KITTY                           
-                        Retrieve all kitty info
+      optional arguments:                                 
+        -h, --help            show this help message and exit                                                  
+        -gen GEN, --gen GEN   Cryptokittie generation(s) to search for. Ex: -gen 1,                            
+                              -gen 1,3,5                  
+        -p MAX_PRICE, --max_price MAX_PRICE               
+                              Top price filter, set the maximum price here                                     
+        -mp MIN_PRICE, --min_price MIN_PRICE              
+                              The minium price filter.    
+        -v, --virgin          True if you are looking for virgins kitties, falsle                              
+                              otherwise                   
+        -go, --goodies_only   Check for the best cattributes only                                              
+        -s, --sire            Search for siring auctions instead of selling.                                   
+        -c CATTRIBUTES, --cattributes CATTRIBUTES         
+                              Search for informed cattributes only. Same format as                             
+                              -gen                        
+        -color MAIN_COLOR, --main_color MAIN_COLOR        
+                              Search for informed main color only. Same format as                              
+                              -gen                        
+        -k KITTY, --kitty KITTY                           
+                              Retrieve all kitty info
 
 # Example
 
-        python pyrrrscanner.py -s -p 10 -color gold -c beard,chocolate
+        python g.py -s -p 10 -color gold -c beard,chocolate
         [*] Scanner init
         [*] QuerySearch Config: "
                 |_ gen:
