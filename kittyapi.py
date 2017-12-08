@@ -40,7 +40,7 @@ class Scanner:
     def __init__(self, searchQuery, manager=None):
         self.api = CryptokittieAPI()
         self.offset = 0
-        self.limit = 50
+        self.limit = 20
         self.searchQuery = searchQuery
         self.manager = manager
         self.foundIds = []
