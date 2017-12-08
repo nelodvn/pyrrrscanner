@@ -96,7 +96,7 @@ if __name__ == "__main__":
             cattributesQueryParam.append(args.cattributes)
 
     mainColorQueryParam = []
-    if args.cattributes:
+    if args.main_color:
         if "," in args.main_color:
             for s in args.main_color.split(","):
                 mainColorQueryParam.append(s)

@@ -139,15 +139,13 @@ class SearchQuery:
         self.sire = sire
         self.cattributes = cattributes
         self.mainColor = mainColor
-        #self.good_array = ['violet','googly', 'wingtips','mainecoon', 'jaguar','whixtensions','cerulian', 'chartreux', 'fabulous', 'peach', 'gold', 'bubblegum', \
-        #'dali', 'otaku', 'scarlet', 'bloodred', 'skyblue', 'emeraldgreen', 'spock', 'limegreen', 'tigerpunk', 'beard', 'mauveover', 'barkbrown']
 
     def searchQueryString(self):
         queryString = ""
         if self.gen:
             queryString += "gen:"
             for g in self.gen:
-                queryString += queryString + str(g) + ","
+                queryString += str(g) + ","
             queryString = queryString[0:-1]
 
         if self.cattributes:
