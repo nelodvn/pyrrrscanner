@@ -60,10 +60,8 @@ class Scanner:
 
     def scan(self):
         print "[*] Scanner starting"
-        print self
         data = self.nextPage()
 
-        print len(data['auctions'])
         while len(data['auctions']) > 0:
             print "[SCANNER] Got a total of %d auctions." % len(data['auctions'])
             foundAuctions = 0
