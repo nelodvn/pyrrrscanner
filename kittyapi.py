@@ -43,6 +43,7 @@ class Scanner:
         self.limit = 50
         self.searchQuery = searchQuery
         self.manager = manager
+        self.foundIds = []
 
         # change to debug
         print "[*] Scanner init"
@@ -53,20 +54,26 @@ class Scanner:
         payload = self.api.getAudictionList(self.offset, self.limit, self.searchQuery.searchQueryString(), self.searchQuery.sire)
         return payload
 
+    def scanForever(self):
+        while True:
+            self.scan()
 
     def scan(self):
         print "[*] Scanner starting"
         print self
         data = self.nextPage()
-        foundAuctions = len(data)
 
-        while foundAuctions > 0:
+        print len(data['auctions'])
+        while len(data['auctions']) > 0:
             print "[SCANNER] Got a total of %d auctions." % len(data['auctions'])
+            foundAuctions = 0
             for auction in data['auctions']:
                 kitty = self.api.getKitty(auction['kitty']['id'])
                 if self.isGold(auction, kitty):
-                    self.manager.addGoldKitty(auction, kitty)
-                    foundAuctions += 1
+                    if kitty['id'] not in self.foundIds:
+                        self.manager.addGoldKitty(auction, kitty)
+                        self.foundIds.append(auction['kitty']['id'])
+                        foundAuctions += 1
             print "[SCANNER] offset result: %d/%d" % (foundAuctions,len(data['auctions']))
             self.offset += self.limit
             print "[SCANNER] offset: %d" % self.offset
@@ -85,7 +92,7 @@ class Scanner:
         auctionPrice = float(auction['current_price'])/1000000000000000000
 
         if not (auctionPrice <= self.searchQuery.maxPrice and auctionPrice >= self.searchQuery.minPrice):
-            print '[SELECTOR %s] Price: %f, bad price range (%f,%f)' %(kitty['id'],auctionPrice, self.searchQuery.maxPrice, self.searchQuery.minPrice)
+            # print '[SELECTOR %s] Price: %f, bad price range (%f,%f)' %(kitty['id'],auctionPrice, self.searchQuery.maxPrice, self.searchQuery.minPrice)
             return False
 
         if self.searchQuery.cattributes:
@@ -127,10 +134,12 @@ class Scanner:
             except KeyError:
                 return  True
 
+        if kitty['status']['cooldown_index'] > self.searchQuery.cooldownMaxIndex:
+            return False
         return True
 
 class SearchQuery:
-    def __init__(self,gen, maxPrice=float(1), minPrice=float(0), virginOnly=True, goodiesOnly=False, sire=False, cattributes=[], mainColor=[]):
+    def __init__(self,gen, maxPrice=float(1), minPrice=float(0), virginOnly=True, goodiesOnly=False, sire=False, cattributes=[], mainColor=[], cooldownMaxIndex=10):
         self.gen = gen
         self.maxPrice = maxPrice
         self.minPrice = minPrice
@@ -139,6 +148,7 @@ class SearchQuery:
         self.sire = sire
         self.cattributes = cattributes
         self.mainColor = mainColor
+        self.cooldownMaxIndex = cooldownMaxIndex
 
     def searchQueryString(self):
         queryString = ""

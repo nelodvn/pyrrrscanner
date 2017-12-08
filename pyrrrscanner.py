@@ -1,5 +1,5 @@
 #!/usr/bin/python2.6
-
+import time
 import kittyapi
 import sys
 import argparse
@@ -27,6 +27,9 @@ class KittyManager():
 |_ color: %s
 |_ born: %s
 |_ catributes: %s
+|_ is ready: %s
+|_ cooldown index: %s
+|_ cooldown: %s
 |_ price: %f
 """
         isVirgin = False
@@ -45,8 +48,13 @@ class KittyManager():
         isVirgin, \
         kitty['color'],\
         kitty['created_at'], \
-        str(cattributes), \
+        str(cattributes),\
+        kitty['status']['is_ready'],\
+        kitty['status']['cooldown_index'],\
+        kitty['status']['cooldown'],\
         (float(auction['current_price'])/1000000000000000000))
+
+
 
 description_string = "prrrruuscanner - cryptokitties.co (CK) scanner, build with pruu love by nelown"
 parser = argparse.ArgumentParser(description=description_string)
@@ -60,7 +68,9 @@ parser.add_argument('-s', '--sire', action='store_true', help='Search for siring
 parser.add_argument('-c', '--cattributes', type=str, help='Search for informed cattributes only. Same format as -gen', required=False)
 parser.add_argument('-color', '--main_color', type=str, help='Search for informed main color only. Same format as -gen', required=False)
 parser.add_argument('-k', '--kitty', type=str, help='Retrieve all kitty info', required=False)
+parser.add_argument('-f', '--forever', action='store_true', help='Keep scanning forever', required=False)
 #parser.add_argument('-cf', '--cattributes_file', action='store_true', help='Search for siring auctions instead of selling. Same format as -gen', required=False)
+parser.add_argument('-cooldown', '--cooldown', type=int, help='Filter the cooldown max limit index (fast, snappy, etc)', required=False)
 
 parser.add_argument
 args = parser.parse_args()
@@ -108,9 +118,15 @@ if __name__ == "__main__":
     if not args.min_price:
         args.min_price = float(0)
 
-    searchParameters = kittyapi.SearchQuery(gen, maxPrice=args.max_price, minPrice=args.min_price, virginOnly=args.virgin, goodiesOnly=args.goodies_only, sire=args.sire, cattributes=cattributesQueryParam, mainColor=mainColorQueryParam)
+    searchParameters = kittyapi.SearchQuery(gen, maxPrice=args.max_price, minPrice=args.min_price, virginOnly=args.virgin, goodiesOnly=args.goodies_only, sire=args.sire, cattributes=cattributesQueryParam, mainColor=mainColorQueryParam, cooldownMaxIndex=args.cooldown)
     scan = kittyapi.Scanner(searchParameters, manager=manager)
     try:
-        scan.scan()
+        if args.forever:
+            try:
+                scan.scanForever()
+            except:
+                pass
+        else:
+            scan.scan()
     except KeyboardInterrupt:
         sys.exit()
