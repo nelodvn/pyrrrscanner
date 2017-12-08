@@ -37,6 +37,7 @@ For now, t
 
 # Example
 Search for any kitty that has color gold, beard and chocolate as cattributes and costs less than 0.05 eth:
+
         python g.py -s -p 0.05 -color gold -c beard,chocolate
         [*] Scanner init
         [*] QuerySearch Config: "
@@ -69,7 +70,9 @@ Search for any kitty that has color gold, beard and chocolate as cattributes and
         |_ price: 0.085000
 
 Search for any gen 2 or 3 virgin kitty, costing less than 0.05 eth:
+
         python pyrrrscanner.py -gen 2 -v -p 0.005
 
 You can also search for siring gold gen2 costing les .005:
+
         python pyrrrscanner.py -gen 2 -p 0.005 -s -c gold
