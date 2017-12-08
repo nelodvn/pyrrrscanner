@@ -181,6 +181,9 @@ class SearchQuery:
         |_ minPrice: %s
         |_ virgin: %s
         |_ goodies: %s
-        |_ sire: %s"""
+        |_ sire: %s
+        |_ cattributes: %s
+        |_ mainColor: %s,
+        |_ cooldownMaxIndex: %s"""
 
-        return config % (gens, self.maxPrice, self.minPrice, self.virginOnly, self.searchForGoodies, self.sire)
+        return config % (gens, self.maxPrice, self.minPrice, self.virginOnly, self.searchForGoodies, self.sire, self.cattributes, self.mainColor, self.cooldownMaxIndex)
