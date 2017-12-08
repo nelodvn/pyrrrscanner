@@ -56,7 +56,7 @@ class KittyManager():
 
 
 
-description_string = "prrrruuscanner - cryptokitties.co (CK) scanner, build with pruu love by nelown"
+banner = description_string = "prrrruuscanner - cryptokitties.co (CK) scanner, build with pru by nelown\nFeel free to donate some kitties :) 0xccAb13D1e0430b11213a385223423eb4Fe18A129\n"
 parser = argparse.ArgumentParser(description=description_string)
 
 parser.add_argument('-gen', '--gen', type=str, help='Cryptokittie generation(s) to search for. Ex: -gen 1, -gen 1,3,5', required=False)
@@ -76,6 +76,7 @@ parser.add_argument
 args = parser.parse_args()
 
 if __name__ == "__main__":
+    print banner
 
     manager = KittyManager()
 
