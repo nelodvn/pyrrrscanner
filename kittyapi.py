@@ -10,7 +10,7 @@ class CryptokittieAPI:
 
     def getKitty(self, kittyId):
         requestUrl = self.API_KITTY+str(kittyId)
-        print "[CryptokittieAPI] Getting kitty %s: %s" % (kittyId, requestUrl)
+#        print "[CryptokittieAPI] Getting kitty %s: %s" % (kittyId, requestUrl)
 
         return requests.get(requestUrl).json()
 
