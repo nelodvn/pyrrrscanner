@@ -8,9 +8,9 @@ For now, t
 
 # Usage
 
-usage: pyrrrscanner.py [-h] [-gen GEN] [-p MAX_PRICE] [-mp MIN_PRICE] [-v]                               
-                       [-go] [-s] [-c CATTRIBUTES] [-color MAIN_COLOR]                                   
-                       [-k KITTY]                   
+      usage: pyrrrscanner.py [-h] [-gen GEN] [-p MAX_PRICE] [-mp MIN_PRICE] [-v]                               
+                             [-go] [-s] [-c CATTRIBUTES] [-color MAIN_COLOR]                                   
+                             [-k KITTY]                   
 
       prrrruuscanner - cryptokitties.co (CK) scanner, build with pruu love by nelown                           
 
