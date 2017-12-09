@@ -17,7 +17,6 @@ class KittyManager():
         ckutils = kittyapi.CKUtils()
         cattributes = ckutils.getKittyCattributes(kitty)
 
-
         format =\
 """
 [Kitty %s]
