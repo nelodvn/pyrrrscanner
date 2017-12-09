@@ -36,6 +36,49 @@ For now, t
                               Retrieve all kitty info
 
 # Example
+
+Searching for a gen3 cymric beard:
+
+        python pyrrrscanner.py -gen 3 -c cymric,beard
+        prrrruuscanner - cryptokitties.co (CK) scanner, build with pru by nelown                                 
+        Feel free to donate some kitties :) 0xccAb13D1e0430b11213a385223423eb4Fe18A129
+
+        [*] Scanner init                                    
+        [*] QuerySearch Config: "
+                |_ gen: 3
+                |_ maxPrice: 1.0
+                |_ minPrice: 0.0
+                |_ virgin: False
+                |_ goodies: False
+                |_ sire: False
+                |_ cattributes: ['cymric', 'beard']
+                |_ mainColor: [],
+                |_ cooldownMaxIndex: 10
+        [*] Scanner starting
+        (...)
+        [Kitty 145590]
+        |_ name: None
+        |_ gen: 3
+        |_ virgin: True
+        |_ color: mintgreen
+        |_ born: 2017-12-08T06:33:36.000Z
+        |_ catributes: ['orangesoda', 'chocolate', 'thicccbrowz', 'beard', 'mintgreen', 'totesbasic', 'emeraldgreen', 'cymric']
+        |_ is ready: True
+        |_ cooldown index: 1
+        |_ cooldown: 1442287584405
+        |_ price: 0.113717
+        (...)
+        [SCANNER] Shutting down.                            
+        [SCANNER] Found 7 kitties that match parameters.    
+        [SCANNER] median price for this search: 0.406399    
+        [112096] ETH 1.000000 - https://www.cryptokitties.co/kitty/112096                                        
+        [121290] ETH 0.140000 - https://www.cryptokitties.co/kitty/121290                                        
+        [101661] ETH 0.550000 - https://www.cryptokitties.co/kitty/101661                                        
+        [145590] ETH 0.113717 - https://www.cryptokitties.co/kitty/145590                                        
+        [159387] ETH 0.473263 - https://www.cryptokitties.co/kitty/159387                                        
+        [98716] ETH 0.126127 - https://www.cryptokitties.co/kitty/98716                                          
+        [148349] ETH 0.441688 - https://www.cryptokitties.co/kitty/148349     
+
 Search for any kitty that has color gold, beard and chocolate as cattributes and costs less than 0.05 eth:
 
         python g.py -s -p 0.05 -color gold -c beard,chocolate
