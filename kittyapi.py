@@ -10,7 +10,7 @@ class CryptokittieAPI:
 
     def getKitty(self, kittyId):
         requestUrl = self.API_KITTY+str(kittyId)
-#        print "[CryptokittieAPI] Getting kitty %s: %s" % (kittyId, requestUrl)
+        print "[CryptokittieAPI] Getting kitty %s: %s" % (kittyId, requestUrl)
 
         return requests.get(requestUrl).json()
 
@@ -40,7 +40,7 @@ class Scanner:
     def __init__(self, searchQuery, manager=None):
         self.api = CryptokittieAPI()
         self.offset = 0
-        self.limit = 20
+        self.limit = 5
         self.searchQuery = searchQuery
         self.manager = manager
         self.foundIds = []
@@ -68,10 +68,10 @@ class Scanner:
             for auction in data['auctions']:
                 kitty = self.api.getKitty(auction['kitty']['id'])
                 if self.isGold(auction, kitty):
-                    if kitty['id'] not in self.foundIds:
-                        self.manager.addGoldKitty(auction, kitty)
-                        self.foundIds.append(auction['kitty']['id'])
-                        foundAuctions += 1
+                    #if kitty['id'] not in self.foundIds:
+                    self.manager.addGoldKitty(auction, kitty)
+                    self.foundIds.append(auction['kitty']['id'])
+                    foundAuctions += 1
             print "[SCANNER] offset result: %d/%d" % (foundAuctions,len(data['auctions']))
             self.offset += self.limit
             print "[SCANNER] offset: %d" % self.offset
@@ -87,13 +87,17 @@ class Scanner:
         return msg % (self.offset, self.limit)
 
     def isGold(self, auction, kitty):
+
         auctionPrice = float(auction['current_price'])/1000000000000000000
 
+        print "[SELECT %s] checking price: %f." % (kitty['id'], auctionPrice)
         if not (auctionPrice <= self.searchQuery.maxPrice and auctionPrice >= self.searchQuery.minPrice):
-            # print '[SELECTOR %s] Price: %f, bad price range (%f,%f)' %(kitty['id'],auctionPrice, self.searchQuery.maxPrice, self.searchQuery.minPrice)
+            print '[SELECTOR %s] Price: %f, bad price range (%f,%f)' %(kitty['id'],auctionPrice, self.searchQuery.maxPrice, self.searchQuery.minPrice)
             return False
+        print "[SELECT %s] price ok." % kitty['id']
 
         if self.searchQuery.cattributes:
+            print "[SELECT %s] checking cattributes." % kitty['id']
             hasCattributes = False
             print "[SELECTOR %s] Scanning for desired cattributes." % kitty['id']
             for attr in kitty['cattributes']:
@@ -102,10 +106,12 @@ class Scanner:
                     hasCattributes = True
 
             if not hasCattributes:
-                print "DISCARTING CATTRIBUTES"
+                print "[SELECTOR %s] no good cattributes, discarting." % kitty['id']
                 return False
+        print "[SELECT %s] cattributes passed." % kitty['id']
 
         if self.searchQuery.mainColor:
+            print "[SELECT %s] checking main color." % kitty['id']
             hasMainColor = False
 
             maincolor = str(kitty['color']) in self.searchQuery.mainColor
@@ -115,23 +121,29 @@ class Scanner:
                 print "[SELECTOR %s] Found %s as main color" % (kitty['id'],kitty['color'])
                 hasMainColor = True
             if mainColorInCattributes:
-                print "[SELECTOR %s] Found as main color %s in cattributes" % (kitty['id'],attr['color'])
+                print "[SELECTOR %s] Found as main color %s in cattributes" % (kitty['id'],kitty['color'])
                 hasMainColor = True
 
             if not hasMainColor:
-                print "DISCARTING COLOR"
+                print "[SELECTOR %s] no good colors, discarting." % kitty['id']
                 return False
+            else:
+                print "[SELECT %s] checking main color ok." % kitty['id']
 
         if self.searchQuery.virginOnly:
+            print "[SELECT %s] checking virginity." % kitty['id']
             try:
                 child = kitty['children']
                 if len(child) > 0:
                     return False
+                    print "[SELECTOR %s] this safadeenho is not virgin, discarting." % kitty['id']
                 else:
+                    print "[SELECTOR %s] omg its virgin!" % kitty['id']
                     return True
             except KeyError:
+                print "[SELECTOR %s] omg its virgin! by key error" % kitty['id']
                 return  True
-
+        print self.searchQuery.cooldownMaxIndex
         if kitty['status']['cooldown_index'] > self.searchQuery.cooldownMaxIndex:
             return False
         return True

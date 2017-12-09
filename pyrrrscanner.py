@@ -114,6 +114,9 @@ if __name__ == "__main__":
         else:
             mainColorQueryParam.append(args.main_color)
 
+    if args.cooldown == None:
+        args.cooldown = 10
+
     if not args.max_price:
         args.max_price = float(1)
     if not args.min_price:
