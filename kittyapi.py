@@ -1,6 +1,7 @@
 #!bin/python
 import requests
 import sys
+from operator import itemgetter, attrgetter, methodcaller
 
 class CryptokittieAPI:
     def __init__(self):
@@ -45,6 +46,7 @@ class Scanner:
         self.searchQuery = searchQuery
         self.manager = manager
         self.found = {}
+        self.sorted = {}
 
         # change to debug
         print "[*] Scanner init"
@@ -67,6 +69,9 @@ class Scanner:
 
     def getResumedKitties(self):
         for k in self.found:
+            self.sorted[self.found[k]['kitty']['id']] = float(self.found[k]['current_price'])/1000000000000000000
+        for k in sorted(self.sorted.items(), key=itemgetter(1)):
+            k = k[0]
             print "[%s] ETH %f - https://www.cryptokitties.co/kitty/%d" % (self.found[k]['kitty']['id'], float(self.found[k]['current_price'])/1000000000000000000, self.found[k]['kitty']['id'])
             
     def scan(self):
